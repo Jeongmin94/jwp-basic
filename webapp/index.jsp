@@ -1,3 +1,6 @@
+<%@page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="kr">
 	<head>
@@ -16,7 +19,7 @@
  	<div class="col-md-12">
         <div class="navbar-header">
 
-            <a href="index.html" class="navbar-brand">SLiPP</a>
+            <a href="index.jsp" class="navbar-brand">SLiPP</a>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
           <i class="glyphicon glyphicon-search"></i>
           </button>
@@ -39,7 +42,7 @@
                   <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
                 </ul>
              </li>
-             <li><a href="./user/list.html"><i class="glyphicon glyphicon-user"></i></a></li>
+             <li><a href="./user/list"><i class="glyphicon glyphicon-user"></i></a></li>
            </ul>
         </div>	
      </div>	
@@ -56,7 +59,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse2">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="index.html">Posts</a></li>
+                <li class="active"><a href="index.jsp">Posts</a></li>
                 <li><a href="user/login.html" role="button">로그인</a></li>
                 <li><a href="user/form.html" role="button">회원가입</a></li>
                 <!--
@@ -70,6 +73,7 @@
     </div>
 </div>
 
+<%--!TODO - 게시글이 있는 경우에만 출력하는 것으로 변경해야 함--%>
 <div class="container" id="main">
    <div class="col-md-12 col-sm-12 col-lg-10 col-lg-offset-1">
       <div class="panel panel-default qna-list">
