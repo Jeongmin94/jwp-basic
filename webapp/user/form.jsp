@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -39,7 +42,7 @@
                         <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
                     </ul>
                 </li>
-                <li><a href="../user/list.html"><i class="glyphicon glyphicon-user"></i></a></li>
+                <li><a href="../user/list"><i class="glyphicon glyphicon-user"></i></a></li>
             </ul>
         </div>
     </div>
@@ -60,29 +63,33 @@
                 <li><a href="../user/login.jsp" role="button">로그인</a></li>
                 <li><a href="../user/form.jsp" role="button">회원가입</a></li>
                 <li><a href="#" role="button">로그아웃</a></li>
-                <li><a href="#" role="button">개인정보수정</a></li>
+                <li><a href="../user/update.jsp" role="button">개인정보수정</a></li>
             </ul>
         </div>
     </div>
 </div>
 
 <div class="container" id="main">
-   <div class="col-md-12 col-sm-12 col-lg-10 col-lg-offset-1">
+   <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-default content-main">
-          <form name="question" method="post" action="">
+          <form name="question" method="post" action="/user/create">
               <div class="form-group">
-                  <label for="writer">글쓴이</label>
-                  <input class="form-control" id="writer" name="writer" placeholder="글쓴이"/>
+                  <label for="userId">사용자 아이디</label>
+                  <input class="form-control" id="userId" name="userId" placeholder="User ID">
               </div>
               <div class="form-group">
-                  <label for="title">제목</label>
-                  <input type="text" class="form-control" id="title" name="title" placeholder="제목"/>
+                  <label for="password">비밀번호</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Password">
               </div>
               <div class="form-group">
-                  <label for="contents">내용</label>
-                  <textarea name="contents" id="contents" rows="5" class="form-control"></textarea>
+                  <label for="name">이름</label>
+                  <input class="form-control" id="name" name="name" placeholder="Name">
               </div>
-              <button type="submit" class="btn btn-success clearfix pull-right">질문하기</button>
+              <div class="form-group">
+                  <label for="email">이메일</label>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+              </div>
+              <button type="submit" class="btn btn-success clearfix pull-right">회원가입</button>
               <div class="clearfix" />
           </form>
         </div>

@@ -33,6 +33,13 @@ public class User {
         return this.password.equals(password);
     }
 
+    public void updateUser(String userId, String password, String name, String email) {
+        this.userId = userId;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;

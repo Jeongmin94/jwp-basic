@@ -1,4 +1,4 @@
-package next.web;
+package next.web.servlet;
 
 import java.io.IOException;
 
@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import core.db.DataBase;
+import next.util.HttpUtil;
 import next.web.attribute.Attribute;
+
+import static next.util.HttpUtil.checkIsLoginCookie;
 
 @WebServlet("/user/list")
 public class ListUserServlet extends HttpServlet {
@@ -25,6 +28,9 @@ public class ListUserServlet extends HttpServlet {
         if(cookies != null) {
             for(Cookie cookie : cookies) {
                 isLogin = checkIsLoginCookie(cookie);
+                if(isLogin) {
+                    break;
+                }
             }
         }
 
@@ -37,15 +43,5 @@ public class ListUserServlet extends HttpServlet {
         req.setAttribute("users", DataBase.findAll());
         RequestDispatcher rd = req.getRequestDispatcher("/user/list.jsp");
         rd.forward(req, resp);
-    }
-
-    private boolean checkIsLoginCookie(Cookie cookie) {
-        String cookieName = cookie.getName();
-
-        if(!cookieName.equals("isLogin")) {
-            return false;
-        }
-
-        return cookie.getValue().equals("true");
     }
 }
