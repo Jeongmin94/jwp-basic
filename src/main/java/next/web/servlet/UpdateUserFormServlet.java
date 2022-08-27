@@ -10,10 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 import static next.util.HttpUtil.checkIsLoginCookie;
@@ -27,27 +24,24 @@ public class UpdateUserFormServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cookie[] cookies = req.getCookies();
+        HttpSession session = req.getSession();
 
-        boolean isLogin = false;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                isLogin = checkIsLoginCookie(cookie);
-                if(isLogin) {
-                    break;
-                }
-            }
-        }
-
-        if (!isLogin) {
-            req.setAttribute(Attribute.MESSAGE.getValue(), "로그인을 하고 이용해주세요.");
+        if(session == null) {
+            log.error("session is null");
+            req.setAttribute(Attribute.MESSAGE.getValue(), "로그인을 먼저 해주세요.");
             RequestDispatcher rd = req.getRequestDispatcher(LOGIN_FAILED_PATH);
             rd.forward(req, resp);
             return;
         }
 
-        // !TODO - 세션에 userId를 저장하고 전달 받아 사용해야 함
-        User user = DataBase.findUserById(req.getParameter("userId"));
+        User user = (User) session.getAttribute("user");
+        if(user == null) {
+            log.error("user is null");
+            req.setAttribute(Attribute.MESSAGE.getValue(), "로그인을 먼저 해주세요.");
+            RequestDispatcher rd = req.getRequestDispatcher(LOGIN_FAILED_PATH);
+            rd.forward(req, resp);
+            return;
+        }
 
         req.setAttribute("user", user);
         RequestDispatcher rd = req.getRequestDispatcher("/user/update.jsp");
@@ -71,6 +65,7 @@ public class UpdateUserFormServlet extends HttpServlet {
 
         user.updateUser(userId, password, name, email);
 
+        log.debug("update user info success");
         resp.sendRedirect("/index.jsp");
     }
 }

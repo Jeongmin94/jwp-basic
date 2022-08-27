@@ -24,13 +24,12 @@
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-default content-main">
             <form name="question" method="post" action="/user/update">
-                <input type="hidden" class="form-control" id="userId" name="userId" value="${user.userId}"/>
                 <div class="alert alert-danger" role="alert">
                     <c:out value="${message}" default="변경하고 싶은 정보를 입력해주세요."></c:out>
                 </div>
                 <div class="form-group">
                     <label for="userId">사용자 아이디</label>
-                    ${user.userId}
+                    <input type="text" class="form-control" id="userId" name="userId" value="${user.userId}" disabled>
                 </div>
                 <div class="form-group">
                     <label for="password">비밀번호</label>
