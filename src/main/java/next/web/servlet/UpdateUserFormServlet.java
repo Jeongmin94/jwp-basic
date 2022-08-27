@@ -46,6 +46,7 @@ public class UpdateUserFormServlet extends HttpServlet {
             return;
         }
 
+        // !TODO - 세션에 userId를 저장하고 전달 받아 사용해야 함
         User user = DataBase.findUserById(req.getParameter("userId"));
 
         req.setAttribute("user", user);
