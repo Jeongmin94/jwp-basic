@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
         if (userId == null || password == null) {
             log.debug("login failed - ID or PW is null");
             req.setAttribute(Attribute.MESSAGE.getValue(), "아이디나 패스워드를 입력해주세요.");
-            forward(req, resp, LOGIN_FAILED_PATH);
+            forward(req, resp);
             return;
         }
 
@@ -39,18 +39,18 @@ public class LoginServlet extends HttpServlet {
         if (user == null) {
             log.debug("login failed - USER IS NULL");
             req.setAttribute(Attribute.MESSAGE.getValue(), "없는 사용자입니다. 회원가입을 진행해주세요.");
-            forward(req, resp, LOGIN_FAILED_PATH);
+            forward(req, resp);
             return;
         }
 
         if (!user.checkPassword(password)) {
             log.debug("login failed - PASSWORD NOT MATCH");
-            forward(req, resp, LOGIN_FAILED_PATH);
+            forward(req, resp);
             return;
         }
 
         HttpSession session = req.getSession();
-        session.setAttribute("user", user);
+        session.setAttribute(Attribute.USER.getValue(), user);
 
         Cookie cookie = new Cookie("isLogin", "true");
         cookie.setPath("/");
@@ -58,8 +58,8 @@ public class LoginServlet extends HttpServlet {
         resp.sendRedirect(LOGIN_SUCCESS_PATH);
     }
 
-    private void forward(HttpServletRequest req, HttpServletResponse resp, String path) throws ServletException, IOException {
-        RequestDispatcher rd = req.getRequestDispatcher(path);
+    private void forward(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher rd = req.getRequestDispatcher(LoginServlet.LOGIN_FAILED_PATH);
         rd.forward(req, resp);
     }
 }
