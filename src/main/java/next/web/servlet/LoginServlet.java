@@ -2,6 +2,7 @@ package next.web.servlet;
 
 import core.db.DataBase;
 import next.model.User;
+import next.util.HttpUtil;
 import next.web.attribute.Attribute;
 import next.web.parameter.Parameter;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.UUID;
 
 
 @WebServlet("/user/login")
@@ -50,9 +52,12 @@ public class LoginServlet extends HttpServlet {
         }
 
         HttpSession session = req.getSession();
+        UUID uuid = UUID.randomUUID();
+
         session.setAttribute(Attribute.USER.getValue(), user);
 
-        Cookie cookie = new Cookie("isLogin", "true");
+        HttpUtil.addSession(uuid.toString(), session);
+        Cookie cookie = new Cookie("session", uuid.toString());
         cookie.setPath("/");
         resp.addCookie(cookie);
         resp.sendRedirect(LOGIN_SUCCESS_PATH);
